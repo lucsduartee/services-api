@@ -1,5 +1,13 @@
 class Services
   class << self
+    def getAll
+      Service.all
+    end
+
+    def get(id)
+      Service.find(id)
+    end
+
     def create(params)
       Service.create!(
         name: params[:name],

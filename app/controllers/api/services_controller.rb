@@ -2,18 +2,27 @@ class Api::ServicesController < ApplicationController
   # GET /services
   # GET /services.json
   def index
-    @services = Service.all
+    services = Services.getAll
+
+    render json: { services: services }, status: :ok
+  rescue => e
+    render json: { message: e.message }, status: :internal_server_error
   end
 
-  # GET /services/1
-  # GET /services/1.json
   def show
+    service = Services.get(params[:id])
+
+    render json: { service: service }, status: :ok
+  rescue => e
+    render json: { message: e.message }, status: :internal_server_error
   end
 
   def create
     service = Services.create(create_params)
 
     render json: { service: service }, status: :created
+  rescue => e
+    render json: { message: e.message }, status: :unprocessable_entity
   end
 
   def update
