@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     resources :services do
       resources :expenses, only: [ :index ]
     end
-    resources :expenses, only: [ :create, :update ]
+    resources :expenses, only: [ :create, :update ] do
+      member do
+        get "download_nota_fiscal"
+      end
+    end
     resources :budgets, only: [ :create, :delete ]
   end
 end

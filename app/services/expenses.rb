@@ -5,20 +5,14 @@ class Expenses
     end
 
     def create(params, file)
-      Expense
-      .create!(
+      Expense.create!(
         name: params[:name],
         value: params[:value],
         total_payments: params[:total_payments],
         category: params[:category],
         service_id: params[:service_id],
+        nota_fiscal: file,
       )
-
-      filename = file.original_filename
-      filepath = file.tempfile
-
-      object = upload_to_s3(filename, filepath)
-      binding.pry
     end
 
     def update(params)
@@ -31,6 +25,10 @@ class Expenses
 
       service.reload
       service
+    end
+
+    def get_nota_fiscal(id)
+      Expense.find(id)&.nota_fiscal&.url
     end
 
     private

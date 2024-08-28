@@ -21,6 +21,14 @@ class Api::ExpensesController < ApplicationController
     render json: { eeee: "eeee" }, status: :ok
   end
 
+  def download_nota_fiscal
+    download_link = Expenses.get_nota_fiscal(params[:id])
+
+    render json: download_link, status: :ok
+  rescue => e
+    render json: { message: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def create_params
