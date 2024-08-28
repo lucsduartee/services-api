@@ -33,6 +33,8 @@ gem "pry"
 
 gem "pry-rails"
 
+gem "active_model_serializers"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
@@ -43,3 +45,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
+
+gem "aws-sdk-s3", require: false
+
+gem "dotenv-rails", groups: [ :development, :test ]

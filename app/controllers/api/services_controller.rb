@@ -4,7 +4,7 @@ class Api::ServicesController < ApplicationController
   def index
     services = Services.getAll
 
-    render json: { services: services }, status: :ok
+    render json: services, each_serializer: ServiceSerializer, status: :ok
   rescue => e
     render json: { message: e.message }, status: :internal_server_error
   end
@@ -38,6 +38,6 @@ class Api::ServicesController < ApplicationController
   end
 
   def update_params
-    params.permit(:gross_margin, :status)
+    params.permit(:gross_margin, :service_status, :id)
   end
 end

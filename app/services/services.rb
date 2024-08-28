@@ -8,6 +8,10 @@ class Services
       Service.find(id)
     end
 
+    def get_expenses(id)
+      get(id).expense
+    end
+
     def create(params)
       Service.create!(
         name: params[:name],
@@ -17,10 +21,15 @@ class Services
     end
 
     def update(params)
-      Service.update!(
+      service = Service.find(params[:id])
+
+      service.update!(
         gross_margin: params[:gross_margin],
-        status: params[:status],
+        status: params[:service_status],
       )
+
+      service.reload
+      service
     end
   end
 end

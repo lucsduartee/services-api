@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   namespace :api do
-    resources :services
+    resources :services do
+      resources :expenses, only: [ :index ]
+    end
     resources :expenses, only: [ :create, :update ]
     resources :budgets, only: [ :create, :delete ]
   end

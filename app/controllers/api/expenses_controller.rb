@@ -1,19 +1,33 @@
 class Api::ExpensesController < ApplicationController
-  def create
-    @expense = Expense.new(expense_params)
+  def index
+    expenses = Expenses.get_expenses_by_service_id(params[:service_id])
 
-    render json: { eeee: "eeee" }, status: created
+    render json: { expenses: expenses }, status: :ok
+  rescue => e
+    render json: { message: e.message }, status: :internal_server_error
+  end
+
+  def create
+    expense = Expenses.create(create_params, create_params[:file])
+
+    render json: { expense: expense }, status: :created
+  rescue => e
+    render json: { message: e.message }, status: :unprocessable_entity
   end
 
   def update
     @expense = Expense.find(params[:id])
 
-    render json: { eeee: "eeee" }, status: created
+    render json: { eeee: "eeee" }, status: :ok
   end
 
   private
 
-  def expense_params
-    params.permit(:up_payments_count_with, :description, :name, :type, :value)
+  def create_params
+    params.permit(:total_payments, :file, :name, :category, :value, :service_id)
+  end
+
+  def update_params
+    params.permit(:increase_payments_count_in)
   end
 end

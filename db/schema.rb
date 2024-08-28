@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_20_181644) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_22_141745) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_20_181644) do
     t.bigint "service_id"
     t.string "name"
     t.decimal "value"
-    t.string "type"
+    t.string "category"
     t.integer "total_payments"
     t.integer "payments"
     t.string "nota_fiscal_url"
