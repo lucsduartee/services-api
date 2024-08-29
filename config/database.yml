@@ -80,6 +80,7 @@ test:
 #
 production:
   <<: *default
+  host: database-1.czw8uqmsoew4.us-east-2.rds.amazonaws.com
   database: services_api_production
-  username: services_api
-  password: <%= ENV["SERVICES_API_DATABASE_PASSWORD"] %>
+  username: postgres
+  password: servicesmanagementpassword
