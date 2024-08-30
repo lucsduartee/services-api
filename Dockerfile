@@ -5,7 +5,7 @@ RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 WORKDIR /services-api
 COPY Gemfile /services-api/Gemfile
 COPY Gemfile.lock /services-api/Gemfile.lock
-
+COPY . .
 RUN echo $RAILS_MASTER_KEY >> ./config/master.key
 RUN bundle install
 
