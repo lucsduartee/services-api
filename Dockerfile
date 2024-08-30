@@ -21,8 +21,6 @@ COPY . .
 
 EXPOSE 3000
 
-FROM base AS dev
-
 RUN bundle install
 
 FROM base AS deploy
