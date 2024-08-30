@@ -29,5 +29,11 @@ port ENV.fetch("PORT", 3000)
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 
+ssl_bind "0.0.0.0", "9292", {
+  key: "key.pem",
+  cert: "cert.pem",
+  verify_mode: "none"
+}
+
 # Only use a pidfile when requested
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
