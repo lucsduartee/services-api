@@ -29,7 +29,7 @@ port ENV.fetch("PORT", 3000)
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 
-ssl_bind "0.0.0.0", "9292", {
+ssl_bind "0.0.0.0", "3000", {
   key: "key.pem",
   cert: "cert.pem",
   verify_mode: "none"
