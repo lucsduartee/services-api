@@ -1,19 +1,58 @@
-# syntax=docker/dockerfile:1
-FROM ruby:3.1.1
-ARG RAILS_MASTER_KEY
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
-WORKDIR /services-api
-COPY Gemfile /services-api/Gemfile
-COPY Gemfile.lock /services-api/Gemfile.lock
+FROM ruby:3.1.2-alpine3.15 AS base
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
+WORKDIR /home/services-api
+
+RUN apk add --update --no-cache \
+    build-base \
+    bash \
+    postgresql-client \
+    cmake \
+    curl \
+    less \
+    vim \
+    libssl1.1 \
+    postgresql-dev
+
 COPY . .
-RUN echo $RAILS_MASTER_KEY >> ./config/master.key
+
+EXPOSE 3000
+
+FROM base AS dev
+
 RUN bundle install
 
-# Add a script to be executed every time the container starts.
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
-EXPOSE 3000
+FROM base AS deploy
+
+ARG RAILS_ENV
+ARG RAILS_MASTER_KEY
+
+RUN bundle config --global frozen 1
+RUN bundle config set --global without "development test"
+RUN bundle install --jobs $(nproc --ignore=1) --retry 5
+RUN bundle exec bootsnap precompile --gemfile app/
+
+CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+
+# syntax=docker/dockerfile:1
+# FROM ruby:3.1.1
+# ARG RAILS_MASTER_KEY
+# RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+# WORKDIR /services-api
+# COPY Gemfile /services-api/Gemfile
+# COPY Gemfile.lock /services-api/Gemfile.lock
+# COPY . .
+# RUN echo $RAILS_MASTER_KEY >> ./config/master.key
+# RUN bundle install
+
+# # Add a script to be executed every time the container starts.
+# COPY entrypoint.sh /usr/bin/
+# RUN chmod +x /usr/bin/entrypoint.sh
+# ENTRYPOINT ["entrypoint.sh"]
+# EXPOSE 3000
 
 # syntax = docker/dockerfile:1
 # 
