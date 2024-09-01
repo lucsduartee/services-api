@@ -39,13 +39,11 @@
 
 # syntax=docker/dockerfile:1
 # FROM ruby:3.1.1
-# ARG RAILS_MASTER_KEY
 # RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 # WORKDIR /services-api
 # COPY Gemfile /services-api/Gemfile
 # COPY Gemfile.lock /services-api/Gemfile.lock
 # COPY . .
-# RUN echo $RAILS_MASTER_KEY >> ./config/master.key
 # RUN bundle install
 
 # # Add a script to be executed every time the container starts.
@@ -120,4 +118,3 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD ["./bin/rails", "server"]
-# 
