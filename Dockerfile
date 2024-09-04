@@ -58,6 +58,11 @@
 # docker build -t my-app .
 # docker run -d -p 80:80 -p 443:443 --name my-app -e RAILS_MASTER_KEY=<value from config/master.key> my-app
 # 
+
+# docker build -t app .
+# docker volume create app-storage
+# docker run --rm -it -v app-storage:/rails/storage -p 3000:3000 --env RAILS_MASTER_KEY=e7d51cd971c23e042a4d821dbdb97d83 app
+
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
 ARG RUBY_VERSION=3.1.1
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base

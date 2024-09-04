@@ -9,7 +9,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins "http://localhost:3000",
             "http://localhost:3001",
-            "https://service-management-erp.vercel.app/"
+            "https://service-management-erp.vercel.app"
 
 
     resource "*",
